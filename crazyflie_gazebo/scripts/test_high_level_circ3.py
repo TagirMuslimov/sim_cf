@@ -2,14 +2,53 @@
 
 import imp
 import rospy
+import tf
 import crazyflie
 import crazymath
 import time
 import uav_trajectory
 import math
 
+from crazyflie_driver.msg import GenericLogData
+from crazyflie_driver.msg import Position
+
+
+# local position callback [if need]
+def local_position_callback1(msg):
+    global current_position1
+    current_position1.x = msg.values[0]
+    current_position1.y = msg.values[1]
+    current_position1.z = msg.values[2]
+    current_position1.header = msg.header
+    
+# local position callback [if need]
+def local_position_callback2(msg):
+    global current_position2
+    current_position2.x = msg.values[0]
+    current_position2.y = msg.values[1]
+    current_position2.z = msg.values[2]
+    current_position2.header = msg.header
+
+# local position callback [if need]
+def local_position_callback3(msg):
+    global current_position3
+    current_position3.x = msg.values[0]
+    current_position3.y = msg.values[1]
+    current_position3.z = msg.values[2]
+    current_position3.header = msg.header
+
+
 if __name__ == '__main__':
     rospy.init_node('test_high_level')
+
+    # SUbscribe to get the local position of the crazyflie with prefix cf_prefix 
+    current_position1 = Position()
+    rospy.Subscriber("/cf1" + "/local_position" , GenericLogData , local_position_callback1)
+    current_position2 = Position()
+    rospy.Subscriber("/cf2" + "/local_position" , GenericLogData , local_position_callback2)
+    current_position3 = Position()
+    rospy.Subscriber("/cf3" + "/local_position" , GenericLogData , local_position_callback3)
+    
 
     cf1 = crazyflie.Crazyflie("cf1", "/cf1")
     cf2 = crazyflie.Crazyflie("cf2", "/cf2")
@@ -43,7 +82,6 @@ if __name__ == '__main__':
     cf2.land(targetHeight = 0.0, duration = 2.0)
     cf3.land(targetHeight = 0.0, duration = 2.0)
     time.sleep(3.0)
-    
     # traj1 = uav_trajectory.Trajectory()
     # traj1.loadcsv("takeoff.csv")
 
