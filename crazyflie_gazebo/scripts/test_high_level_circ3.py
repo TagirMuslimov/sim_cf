@@ -17,7 +17,9 @@ CY = 0.1
 k = 5.0
 R = 0.5
 v_f = 0.5
-D = 2*math.pi / 3
+D_12 = 2*math.pi / 3
+D_23 = 2*math.pi / 6
+
 v_cruise = 0.5
 k_f = 1
 
@@ -75,9 +77,9 @@ if __name__ == '__main__':
     time.sleep(5.0)
 
     steps = 900
-    paramCalc = crazymath.Crazymath3(CX, CY, v_cruise, v_f, k_f, D, k, R)
+    paramCalc = crazymath.Crazymath3(CX, CY, v_cruise, v_f, k_f, D_12, D_23, k, R)
     for i in range(steps):
-        cf1_params, cf2_params, cf3_params = paramCalc.calculate(current_position1.x, current_position1.y, current_position2.x, current_position2.y, current_position3.x, current_position3.y)
+        cf1_params, cf2_params, cf3_params, p_12, p_23 = paramCalc.calculate(current_position1.x, current_position1.y, current_position2.x, current_position2.y, current_position3.x, current_position3.y)
         
         setPx1 = current_position1.x + cf1_params.vx/5
         setPx2 = current_position2.x + cf2_params.vx/5

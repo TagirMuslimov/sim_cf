@@ -12,13 +12,14 @@ class CopterParams:
         self.vy = vy
 
 class Crazymath3:
-    def __init__(self, CX, CY, v_cruise, v_f, k_f, D, k, R):
+    def __init__(self, CX, CY, v_cruise, v_f, k_f, D_12, D_23, k, R):
         self.CX = CX
         self.CY = CY
         self.v_cruise = v_cruise
         self.v_f = v_f
         self.k_f = k_f
-        self.D = D
+        self.D_12 = D_12
+        self.D_23 = D_23
         self.k = k
         self.R = R
 
@@ -32,8 +33,8 @@ class Crazymath3:
         d_3, phi_3 = self.distance_to_centre(px3, py3)
         angle_3 = self.phase_angle(d_3, phi_3)
 
-        p12 = self.phase_shift(px1, py1, px2, py2)
-        p23 = self.phase_shift(px2, py2, px3, py3)
+        p12 = self.phase_shift_ab(px1, py1, px2, py2)
+        p23 = self.phase_shift_ab(px2, py2, px3, py3)
 
         v1, v2, v3 = self.velocity(p12, p23)
 
@@ -59,10 +60,10 @@ class Crazymath3:
 
 
     def velocity(self, p_12, p_23):
-        v1 = self.v_cruise + self.v_f * (2 / math.pi) * math.atan(self.k_f * (p_12 - self.D))
+        v1 = self.v_cruise + self.v_f * (2 / math.pi) * math.atan(self.k_f * (p_12 - self.D_12))
         v2 = self.v_cruise + self.v_f * (2 / math.pi) * math.atan(self.k_f *
-                                                    (-p_12 + self.D + p_23 - self.D))
-        v3 = self.v_cruise + self.v_f * (2 / math.pi) * math.atan(self.k_f * (-p_23 + self.D))
+                                                    (-p_12 + self.D_12 + p_23 - self.D_23))
+        v3 = self.v_cruise + self.v_f * (2 / math.pi) * math.atan(self.k_f * (-p_23 + self.D_23))
         return (v1, v2, v3)
 
 
