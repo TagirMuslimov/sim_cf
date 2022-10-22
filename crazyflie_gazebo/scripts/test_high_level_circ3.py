@@ -12,6 +12,17 @@ import math
 from crazyflie_driver.msg import GenericLogData
 from crazyflie_driver.msg import Position
 
+CX = 0
+CY = 0.1
+k = 5.0
+R = 0.5
+v_f = 0.5
+D = 2*math.pi / 3
+v_cruise = 0.5
+k_f = 1
+
+T_Z = 1.5
+
 
 # local position callback [if need]
 def local_position_callback1(msg):
@@ -58,49 +69,34 @@ if __name__ == '__main__':
     cf2.setParam("commander/enHighLevel", 1)
     cf3.setParam("commander/enHighLevel", 1)
 
-    cf1.takeoff(targetHeight = 1.5, duration = 2.0)
-    cf2.takeoff(targetHeight = 1.5, duration = 2.0)
-    cf3.takeoff(targetHeight = 1.5, duration = 2.0)
+    cf1.takeoff(targetHeight = T_Z, duration = 2.0)
+    cf2.takeoff(targetHeight = T_Z, duration = 2.0)
+    cf3.takeoff(targetHeight = T_Z, duration = 2.0)
     time.sleep(5.0)
 
-    # (t , x , y) = circle_trajectory(50 , 10 , 0.8)
+    steps = 900
+    paramCalc = crazymath.Crazymath3(CX, CY, v_cruise, v_f, k_f, D, k, R)
+    for i in range(steps):
+        cf1_params, cf2_params, cf3_params = paramCalc.calculate(current_position1.x, current_position1.y, current_position2.x, current_position2.y, current_position3.x, current_position3.y)
+        
+        setPx1 = current_position1.x + cf1_params.vx/5
+        setPx2 = current_position2.x + cf2_params.vx/5
+        setPx3 = current_position3.x + cf3_params.vx/5
 
-    # cf.goTo(goal = [0.8, 0, 1.5], yaw=0.0, duration = 4, relative = False)
-    # time.sleep(4)
+        setPy1 = current_position1.y + cf1_params.vy/5
+        setPy2 = current_position2.y + cf2_params.vy/5
+        setPy3 = current_position3.y + cf3_params.vy/5
+        
+        cf1.goTo(goal = [setPx1, setPy1, T_Z], yaw=0.0, duration = 0.1, relative = False)
+        cf2.goTo(goal = [setPx2, setPy2, T_Z], yaw=0.0, duration = 0.1, relative = False)
+        cf3.goTo(goal = [setPx3, setPy3, T_Z], yaw=0.0, duration = 0.1, relative = False)
 
-    # for i in range(len(x)):
-    #     cf.goTo(goal = [x[i], y[i], 1.5], yaw=0.0, duration = 10.0/50.0, relative = False)
-    #     time.sleep(1*10.0/50.0)
-
-    # # # cf.land(targetHeight = 0.0 , duration = 4.0)
-    # # # time.sleep(20.0)
-    # # # rospy.spin()
-    # # cf.goTo(goal = [0.5, 0.0, 0.0], yaw=0.2, duration = 2.0, relative = True)
-    # # time.sleep(15.0)
+        time.sleep(0.1)
 
     cf1.land(targetHeight = 0.0, duration = 2.0)
     cf2.land(targetHeight = 0.0, duration = 2.0)
     cf3.land(targetHeight = 0.0, duration = 2.0)
     time.sleep(3.0)
-    # traj1 = uav_trajectory.Trajectory()
-    # traj1.loadcsv("takeoff.csv")
-
-    # traj2 = uav_trajectory.Trajectory()
-    # traj2.loadcsv("losange.csv")
-
-    # print(traj2.duration)
-
-    # cf.uploadTrajectory(0, 0, traj2)
-    # # cf.uploadTrajectory(1, len(traj1.polynomials), traj2)
-
-    # cf.startTrajectory(0, timescale=1.0)
-    # time.sleep(traj2.duration * 2.0)
-
-    # cf.startTrajectory(1, timescale=2.0)
-    # time.sleep(traj2.duration * 2.0)
-
-    # cf.startTrajectory(0, timescale=1.0, reverse=True)
-    # time.sleep(traj1.duration * 1.0)
 
     cf1.stop()
     cf2.stop()
