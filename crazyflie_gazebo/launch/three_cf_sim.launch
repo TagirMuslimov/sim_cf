@@ -27,24 +27,24 @@
   <arg name="tf_prefix_1" default="$(arg cfPrefix)1" />
   <arg name="color_prop_front_1" default="Blue" />
   <arg name="color_prop_back_1" default="Blue" />
-  <arg name="x_1" default="-0.1" />
-  <arg name="y_1" default="0.4" />
+  <arg name="x_1" default="-0.33" />
+  <arg name="y_1" default="0.45" />
   <arg name="z_1" default="0.03" />
 
   <!-- Arguments for second Crazyflie -->
   <arg name="tf_prefix_2" default="$(arg cfPrefix)2" />
   <arg name="color_prop_front_2" default="Red" />
   <arg name="color_prop_back_2" default="Red" />
-  <arg name="x_2" default="0.1" />
-  <arg name="y_2" default="0.4" />
+  <arg name="x_2" default="0.0" />
+  <arg name="y_2" default="0.72" />
   <arg name="z_2" default="0.03" />
 
   <!-- Arguments for third Crazyflie -->
   <arg name="tf_prefix_3" default="$(arg cfPrefix)3" />
   <arg name="color_prop_front_3" default="Green" />
   <arg name="color_prop_back_3" default="Green" />
-  <arg name="x_3" default="0.6" />
-  <arg name="y_3" default="0.0" />
+  <arg name="x_3" default="1.04" />
+  <arg name="y_3" default="-0.32" />
   <arg name="z_3" default="0.03" />
 
   <!-- Some custom blocks for every crazyflie in the environment-->

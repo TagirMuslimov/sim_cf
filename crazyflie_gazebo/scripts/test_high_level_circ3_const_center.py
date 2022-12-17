@@ -15,10 +15,10 @@ from crazyflie_driver.msg import Position
 timestr = time.strftime("%Y%m%d-%H%M%S")
 fp = open('sim3_' + timestr + '_.csv', 'w')
 
-CX = 0.0
-CY = 0.0
+CX = 0.36
+CY = 0.17
 k = 5.0
-R = 1.0
+R = 0.7
 v_f = 0.5
 D_12 = 3*math.pi / 2
 D_23 = 3*math.pi / 2
@@ -26,9 +26,9 @@ D_23 = 3*math.pi / 2
 v_cruise = 0.5
 k_f = 1
 
-T_Z = 1.5
+T_Z = 0.3
 
-safety_radius = 0.5
+safety_radius = 0.3
 eta_vf = 2.0
 eta_apf = 0.2
 

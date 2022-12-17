@@ -93,7 +93,9 @@ class Crazymath3wAPF:
 
     # Calculate course angles via Artificial Potencial Field (APF):
     def get_angle_APF(self, distance_ab, v, angle, px_a, py_a, px_b, py_b):
+        triple_product = (px_a - self.CX)*(py_b - self.CY) - (px_b - self.CX)*(py_a - self.CY)
         if distance_ab < self.safety_radius:
+        # if triple_product < 0:
             vx_APF = self.eta_vf * v * math.sin(angle) - self.eta_apf * (-1/self.safety_radius+1/distance_ab) * (py_a - py_b) / distance_ab**3
             vy_APF = self.eta_vf * v * math.cos(angle) + self.eta_apf * (-1/self.safety_radius+1/distance_ab) * (px_a - px_b) / distance_ab**3
             angle_APF = math.atan2(vx_APF, vy_APF)
@@ -104,7 +106,7 @@ class Crazymath3wAPF:
     def velocity(self, distance_ab, p_12, p_23):
         if distance_ab < self.safety_radius:
             v1 = self.v_cruise
-            v2 = self.v_cruise
+            v2 = self.v_cruise - 0.4
         else:
             v1 = self.v_cruise + self.v_f * (2 / math.pi) * math.atan(self.k_f * (p_12 - self.D_12))
             v2 = self.v_cruise + self.v_f * (2 / math.pi) * math.atan(self.k_f *
