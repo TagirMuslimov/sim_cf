@@ -106,7 +106,7 @@ class Crazymath3wAPF:
     def velocity(self, distance_ab, p_12, p_23):
         if distance_ab < self.safety_radius:
             v1 = self.v_cruise
-            v2 = self.v_cruise - 0.4
+            v2 = self.v_cruise - 0.2
         else:
             v1 = self.v_cruise + self.v_f * (2 / math.pi) * math.atan(self.k_f * (p_12 - self.D_12))
             v2 = self.v_cruise + self.v_f * (2 / math.pi) * math.atan(self.k_f *
