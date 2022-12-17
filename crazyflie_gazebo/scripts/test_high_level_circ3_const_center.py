@@ -18,7 +18,7 @@ fp = open('sim3_' + timestr + '_.csv', 'w')
 CX = 0.0
 CY = 0.0
 k = 5.0
-R = 0.5
+R = 1.0
 v_f = 0.5
 D_12 = 3*math.pi / 2
 D_23 = 3*math.pi / 2
@@ -27,6 +27,10 @@ v_cruise = 0.5
 k_f = 1
 
 T_Z = 1.5
+
+safety_radius = 0.5
+eta_vf = 2.0
+eta_apf = 0.2
 
 def init_log(**log_vars):
     for k, v in log_vars.items():
@@ -90,7 +94,7 @@ if __name__ == '__main__':
     time.sleep(5.0)
 
     steps = 2000
-    paramCalc = crazymath_const_center.Crazymath3(CX, CY, v_cruise, v_f, k_f, D_12, D_23, k, R)
+    paramCalc = crazymath_const_center.Crazymath3wAPF(CX, CY, v_cruise, v_f, k_f, D_12, D_23, k, R, safety_radius, eta_vf, eta_apf)
     for i in range(steps):
         cf1_params, cf2_params, cf3_params, p_12, p_23 = paramCalc.calculate(current_position1.x, current_position1.y, current_position2.x, current_position2.y, current_position3.x, current_position3.y)
         
