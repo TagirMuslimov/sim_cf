@@ -15,8 +15,8 @@ from crazyflie_driver.msg import Position
 timestr = time.strftime("%Y%m%d-%H%M%S")
 fp = open('sim3_' + timestr + '_.csv', 'w')
 
-CX = 0.0
-CY = 0.0
+CX = 0.43
+CY = 0.01
 k = 5.0
 R = 0.65
 v_f = 0.5
@@ -93,7 +93,7 @@ if __name__ == '__main__':
     cf3.takeoff(targetHeight = T_Z, duration = 2.0)
     time.sleep(5.0)
 
-    steps = 2000
+    steps = 300
     paramCalc = crazymath_const_center.Crazymath3wAPF(CX, CY, v_cruise, v_f, k_f, D_12, D_23, k, R, safety_radius, eta_vf, eta_apf)
     for i in range(steps):
         cf1_params, cf2_params, cf3_params, p_12, p_23 = paramCalc.calculate(current_position1.x, current_position1.y, current_position2.x, current_position2.y, current_position3.x, current_position3.y)
