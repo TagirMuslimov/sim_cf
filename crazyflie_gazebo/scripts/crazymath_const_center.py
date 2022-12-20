@@ -64,7 +64,7 @@ class Crazymath3wAPF:
 
         
 
-        return cf1, cf2, cf3, p12_APF, p23
+        return cf1, cf2, cf3, p12_APF, p23, distance_12, angle_1_APF, angle_2_APF
     
     def phase_shift_ab(self, px_a, py_a, px_b, py_b):
         dot_product = (px_a - self.CX)*(px_b - self.CX) + (py_a - self.CY)*(py_b - self.CY)
