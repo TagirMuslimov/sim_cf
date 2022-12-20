@@ -89,9 +89,6 @@ if __name__ == '__main__':
     cf3.takeoff(targetHeight = T_Z, duration = 2.0)
     time.sleep(5.0)
     
-    global CX
-    global CY
-
     steps = 2710
     paramCalc = crazymath_moving_center.Crazymath3(v_cruise, v_f, k_f, D_12, D_23, k, R)
     for i in range(steps):

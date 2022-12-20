@@ -93,9 +93,6 @@ if __name__ == '__main__':
     cf3.takeoff(targetHeight = T_Z, duration = 2.0)
     time.sleep(5.0)
 
-    global CX
-    global CY
-
     steps = 300
     paramCalc = crazymath_const_center.Crazymath3wAPF(CX, CY, v_cruise, v_f, k_f, D_12, D_23, k, R, safety_radius, eta_vf, eta_apf)
     for i in range(steps):
